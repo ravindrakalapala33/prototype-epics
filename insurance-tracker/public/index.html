@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ledger — Policy Renewal Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark">L</span>
+    <div class="brand-text">
+      <h1>Ledger</h1>
+      <p>Policy renewal tracker</p>
+    </div>
+  </div>
+  <button class="btn btn-primary" id="openAddModal">+ Add policy</button>
+</header>
+
+<main class="wrap">
+
+  <section class="stats" id="stats">
+    <!-- filled by JS -->
+  </section>
+
+  <section class="toolbar">
+    <input type="search" id="searchInput" placeholder="Search client, policy no., or insurer…" />
+    <div class="filter-chips" id="filterChips">
+      <button class="chip active" data-urgency="">All</button>
+      <button class="chip chip-expired" data-urgency="expired">Expired</button>
+      <button class="chip chip-urgent" data-urgency="urgent">≤15 days</button>
+      <button class="chip chip-upcoming" data-urgency="upcoming">16–30 days</button>
+      <button class="chip chip-soon" data-urgency="soon">31–60 days</button>
+      <button class="chip chip-healthy" data-urgency="healthy">Healthy</button>
+    </div>
+  </section>
+
+  <section class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Client</th>
+          <th>Policy</th>
+          <th>Insurer</th>
+          <th>Type</th>
+          <th>Premium</th>
+          <th>Expiry</th>
+          <th class="runway-col">Renewal runway</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="policyRows">
+        <!-- filled by JS -->
+      </tbody>
+    </table>
+    <p class="empty-state" id="emptyState" hidden>No policies match this view.</p>
+  </section>
+
+</main>
+
+<!-- Add/Edit Modal -->
+<div class="modal-backdrop" id="modalBackdrop" hidden>
+  <form class="modal" id="policyForm">
+    <h2 id="modalTitle">Add policy</h2>
+    <input type="hidden" id="policyId" />
+
+    <div class="form-grid">
+      <label>Client name
+        <input type="text" id="client_name" required />
+      </label>
+      <label>Client phone
+        <input type="tel" id="client_phone" />
+      </label>
+      <label>Policy number
+        <input type="text" id="policy_number" required />
+      </label>
+      <label>Insurer
+        <input type="text" id="insurer" required />
+      </label>
+      <label>Policy type
+        <select id="policy_type" required>
+          <option value="Health">Health</option>
+          <option value="Motor">Motor</option>
+          <option value="Life Term">Life Term</option>
+          <option value="Home">Home</option>
+          <option value="Travel">Travel</option>
+          <option value="Other">Other</option>
+        </select>
+      </label>
+      <label>Premium (₹)
+        <input type="number" id="premium" min="0" step="1" required />
+      </label>
+      <label>Start date
+        <input type="date" id="start_date" required />
+      </label>
+      <label>Expiry date
+        <input type="date" id="expiry_date" required />
+      </label>
+      <label class="full">Notes
+        <textarea id="notes" rows="2"></textarea>
+      </label>
+    </div>
+
+    <div class="modal-actions">
+      <button type="button" class="btn btn-ghost" id="deletePolicyBtn" hidden>Delete</button>
+      <div class="spacer"></div>
+      <button type="button" class="btn btn-ghost" id="closeModal">Cancel</button>
+      <button type="submit" class="btn btn-primary">Save policy</button>
+    </div>
+  </form>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
